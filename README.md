@@ -11,23 +11,27 @@
 ![WikiText2](https://img.shields.io/badge/Dataset-WikiText2-blue)
 ![PTB](https://img.shields.io/badge/Dataset-PTB-blue)
 
-![GPT-2 XL](https://img.shields.io/badge/Model-GPT2--XL-21C2A4)
-![GPT-J](https://img.shields.io/badge/Model-GPT--J-21C2A4)
-![Llama-2-7B](https://img.shields.io/badge/Model-Llama--2--7B-21C2A4)
-![Llama-2-13B](https://img.shields.io/badge/Model-Llama--2--13B-21C2A4)
-![Falcon-40B](https://img.shields.io/badge/Model-Falcon--40B-21C2A4)
+![LLaMA2-7B](https://img.shields.io/badge/Model-LLaMA2--7B-21C2A4)
+![LLaMA2-13B](https://img.shields.io/badge/Model-LLaMA2--13B-21C2A4)
+![LLaMA3.1-8B](https://img.shields.io/badge/Model-LLaMA3.1--8B-21C2A4)
 
-📰 [Paper](https://www.arxiv.org/abs/2407.17011)
+📰 [Paper](https://arxiv.org/pdf/2506.04179)
 
 </div>
 
 ## 1. Introduction
-Large language models (LLMs) exhibit remarkable in-context learning (ICL) capabilities. However, the underlying working mechanism of ICL remains poorly understood. Recent research presents two conflicting views on ICL: One attributes it to LLMs' inherent ability of task recognition, deeming label correctness and shot numbers of demonstrations as not crucial; the other emphasizes the impact of similar examples in the demonstrations, stressing the need for label correctness and more shots. 
+Large language models (LLMs) deliver impressive performance but remain computationally expensive and structurally inefficient. Existing layer pruning methods often overlook two key aspects of pruning dynamics: token-wise computational variability (horizontal dynamics) and the distinct roles of MLP vs. attention modules (vertical dynamics).
 
 <p align="center">
   <img src="image/introduction.jpg" width="60%" />
   <p align="center">An overview of the proposed two-dimensional coordinate system for ICL.</p>
 </p>
 
-In this work, we provide a **Two-Dimensional Coordinate System** that unifies both views into a systematic framework. The framework explains the behavior of ICL through two orthogonal variables: *whether LLMs can recognize the task* and *whether similar examples are presented in the demonstrations*. We propose the peak inverse rank metric to detect the task recognition ability of LLMs and study LLMs' reactions to different definitions of similarity. Based on these, we conduct extensive experiments to elucidate how ICL functions across each quadrant on multiple representative classification tasks. Finally, we extend our analyses to generation tasks, showing that our coordinate system can also be used to interpret ICL for generation tasks effectively.
+SkipGPT is a dynamic pruning framework that tackles both. It adaptively prunes layers on a per-token basis and decouples MLP and attention pruning for fine-grained control. To stabilize training, SkipGPT introduces a Two-Stage Training Paradigm: first tuning a routing module while freezing the base model, then restoring performance via lightweight LoRA fine-tuning.
+SkipGPT reduces up to 40% of parameters without compromising—and sometimes even improving—performance. It also enables interpretability: revealing attention’s higher redundancy and dynamic computation needs as sequence length grows. These insights push forward both LLM efficiency and architectural understanding.
+
+
+
+
+
 
