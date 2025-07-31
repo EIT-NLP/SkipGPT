@@ -112,6 +112,9 @@ class router_attn_mlp_llama (nn.Module):
         # 防止attention mask为None
         if attention_mask is None:
             attention_mask_temp = torch.ones((b, s), device=hidden_states.device)
+        else:
+            attention_mask_temp = attention_mask
+                
 
         # 更新 self.total_tokens，只统计 attention_mask_temp 为1的 token
         self.total_tokens += attention_mask_temp.sum().item()
