@@ -19,7 +19,7 @@
 
 </div>
 
-## 1. Introduction
+## Introduction
 Large language models (LLMs) deliver impressive performance but remain computationally expensive and structurally inefficient. Existing layer pruning methods often overlook two key aspects of pruning dynamics: token-wise computational variability (**horizontal dynamics**) and the distinct roles of MLP vs. attention modules (**vertical dynamics**).
 
 <p align="center">
@@ -31,7 +31,42 @@ Large language models (LLMs) deliver impressive performance but remain computati
 SkipGPT reduces up to **40**% of parameters without compromising—and sometimes even improving—performance. It also enables interpretability: revealing attention’s higher redundancy and dynamic computation needs as sequence length grows. These insights push forward both LLM efficiency and architectural understanding.
 
 
+## ⚙️ Environment Setup
 
+Create and activate an environment named `skipgpt`:
 
+```bash
+conda create -n skipgpt python=3.10
+conda activate skipgpt
+pip install -r requirements.txt
+```
+
+## Two-stage Training Paradigm
+### Router Tuning
+In the initial stage of training, we focus exclusively on tuning the router while keeping all other model parameters frozen.
+```bash
+python main.py \
+--model_path models/Llama-3.1-8B \
+--method router_attn_mlp \
+--dataset_path datasets/RedPajama-Data-1T-Sample \
+--warmup_ratio 0.1 \
+--max_steps_stage 10000 \
+--learning_rate 2e-3 \
+--lr_scheduler_type cosine
+```
+### LoRA Fine-Tuning (Optional)
+While the router tuning stage is sufficient to preserve most of the model’s performance, we provide an optional LoRA fine-tuning stage for those aiming to fully restore performance to the original model level.
+```bash
+python main.py \
+--lora \
+--model_path models/Llama-3.1-8B  \
+--method post_training \
+--dataset_path datasets/RedPajama-Data-1T-Sample \
+--warmup_ratio 0.1 \
+--max_steps_stage 10000 \
+--learning_rate 2e-4 \
+--lr_scheduler_type cosine
+```
+Note: To continue training, the checkpoint from the router stage must be loaded in models.py.
 
 
