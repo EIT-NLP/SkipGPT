@@ -69,4 +69,12 @@ python main.py \
 ```
 Note: To continue training, the checkpoint from the router stage must be loaded in models.py.
 
+## Citation
+```latex
+@inproceedings{zhaoskipgpt,
+  title={SkipGPT: Each Token is One of a Kind},
+  author={Zhao, Anhao and Ye, Fanghua and Fan, Yingqi and Tong, Junlong and Xiong, Jing and Fei, Zhiwei and Su, Hui and Shen, Xiaoyu},
+  booktitle={Forty-second International Conference on Machine Learning}
+}
+```
 
